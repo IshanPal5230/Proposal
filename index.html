@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Only For You ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{
+background: radial-gradient(circle at top, #111 0%, #000 70%);
+color:white;
+overflow-x:hidden;
+}
+
+/* Netflix Intro */
+#netflix{
+position:fixed;
+width:100%;height:100%;
+background:black;
+display:flex;justify-content:center;align-items:center;
+z-index:99999;
+animation:fadeOut 3s 4s forwards;
+}
+#netflix h1{
+font-size:70px;
+color:red;
+letter-spacing:10px;
+animation:zoomIn 3s ease;
+}
+@keyframes zoomIn{0%{transform:scale(0.5);opacity:0;}100%{transform:scale(1);opacity:1;}}
+@keyframes fadeOut{to{opacity:0;visibility:hidden;}}
+
+/* Lock */
+#lock{
+position:fixed;
+width:100%;height:100%;
+background:black;
+display:flex;justify-content:center;align-items:center;
+flex-direction:column;
+z-index:9999;
+transition:1s;
+}
+input{padding:10px;border-radius:10px;border:none;margin:10px;}
+button{
+padding:12px 30px;
+border:none;border-radius:40px;
+font-size:16px;cursor:pointer;margin:10px;
+transition:0.4s;font-weight:600;
+}
+#yesBtn{background:linear-gradient(45deg,#00ffae,#00c3ff);color:black;}
+#noBtn{background:linear-gradient(45deg,#ff4b5c,#ff0066);position:absolute;}
+
+.container{
+margin:100px auto;
+max-width:900px;
+padding:40px;
+background:rgba(255,255,255,0.07);
+backdrop-filter:blur(25px);
+border-radius:25px;
+text-align:center;
+box-shadow:0 0 40px rgba(255,0,100,0.3);
+animation:fadeIn 2s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+/* Stars */
+.stars{
+position:fixed;width:100%;height:100%;
+background:url("https://i.imgur.com/9QZ7Z6F.png");
+animation:moveStars 80s linear infinite;
+opacity:0.4;z-index:-2;
+}
+@keyframes moveStars{from{background-position:0 0;}to{background-position:10000px 5000px;}}
+
+/* Petals */
+.petal{position:fixed;top:-10px;font-size:20px;animation:fall linear infinite;z-index:-1;}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);}}
+
+/* Gallery */
+.gallery{display:flex;flex-wrap:wrap;justify-content:center;}
+.gallery img{
+width:200px;height:250px;object-fit:cover;margin:20px;
+background:white;padding:10px;border-radius:15px;
+transform:rotate(-3deg);transition:0.5s;
+box-shadow:0 15px 25px rgba(0,0,0,0.4);
+}
+.gallery img:nth-child(2){transform:rotate(3deg);}
+.gallery img:hover{transform:scale(1.15) rotate(0);box-shadow:0 25px 40px rgba(255,0,100,0.6);}
+
+/* Hearts */
+.heart{position:fixed;font-size:24px;animation:floatUp 2s linear forwards;}
+@keyframes floatUp{to{transform:translateY(-600px);opacity:0;}}
+
+/* Ring */
+#ring{display:none;font-size:80px;animation:pop 1s infinite alternate;}
+@keyframes pop{from{transform:scale(1);}to{transform:scale(1.2);}}
+
+/* Popup */
+#popup{
+position:fixed;top:50%;left:50%;
+transform:translate(-50%,-50%) scale(0);
+background:#111;padding:40px;border-radius:20px;
+text-align:center;
+box-shadow:0 0 50px rgba(255,0,120,0.6);
+transition:0.5s;z-index:10000;
+}
+#popup.active{transform:translate(-50%,-50%) scale(1);}
+
+/* Countdown */
+#countdown{font-size:22px;margin:20px;}
+
+/* Timeline */
+.timeline{margin-top:40px;text-align:left;}
+.timeline div{margin:10px 0;padding:10px;background:rgba(255,255,255,0.05);border-radius:10px;}
+
+canvas{position:fixed;top:0;left:0;pointer-events:none;}
+
+@media(max-width:600px){
+.gallery img{width:150px;height:200px;}
+.container{margin:50px 20px;}
+}
+</style>
+</head>
+<body>
+
+<div id="netflix"><h1>FOR YOU</h1></div>
+
+<div id="lock">
+<h1>🔐 Private Surprise</h1>
+<p>Enter our special date</p>
+<input type="password" id="pass">
+<button onclick="unlock()">Enter</button>
+</div>
+
+<div class="stars"></div>
+<canvas id="fireworks"></canvas>
+
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+
+<h1 id="title"></h1>
+<p id="letter"></p>
+
+<button onclick="document.getElementById('music').play()">Play Our Song 🎵</button>
+
+<div id="countdown"></div>
+
+<h1>Our Beautiful Moments 📸</h1>
+<div class="gallery">
+<img src="photo1.jpg">
+<img src="photo2.jpg">
+<img src="photo3.jpg">
+</div>
+
+<div class="timeline">
+<h2>Our Story 💞</h2>
+<div>✨ The day we first talked</div>
+<div>🌸 The day I realized you’re special</div>
+<div>💖 The moments that made us closer</div>
+</div>
+
+<h1>Will You Be More Than Just My Best Friend? ❤️</h1>
+<button id="yesBtn">YES 😍</button>
+<button id="noBtn">NO 🙈</button>
+
+<div id="ring">💍</div>
+
+</div>
+
+<div id="popup">
+<h1>💍 She Said YES! 💖</h1>
+<p>Our forever starts today…</p>
+<button onclick="closePopup()">Close</button>
+</div>
+
+<script>
+function unlock(){
+let p=document.getElementById("pass").value;
+if(p==="1610"){
+let lock=document.getElementById("lock");
+lock.style.opacity="0";
+setTimeout(()=>lock.style.display="none",1000);
+}else alert("Wrong password 😅");
+}
+
+/* Typing */
+let title="I Made This Only For You ❤️";
+let i=0;
+function typeTitle(){
+if(i<title.length){
+document.getElementById("title").innerHTML+=title.charAt(i);
+i++;setTimeout(typeTitle,60);
+}}
+setTimeout(typeTitle,5000);
+
+let text="প্রথম দিন থেকে তুমি আমার জীবনের এক বিশেষ মানুষ...";
+let j=0;
+function typeLetter(){
+if(j<text.length){
+document.getElementById("letter").innerHTML+=text.charAt(j);
+j++;setTimeout(typeLetter,30);
+}}
+setTimeout(typeLetter,8000);
+
+/* Petals */
+for(let i=0;i<25;i++){
+let petal=document.createElement("div");
+petal.innerHTML="🌹";
+petal.className="petal";
+petal.style.left=Math.random()*100+"vw";
+petal.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(petal);
+}
+
+/* Moving NO */
+const noBtn=document.getElementById("noBtn");
+function moveNo(){
+let x=Math.random()*(window.innerWidth-100);
+let y=Math.random()*(window.innerHeight-50);
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+}
+noBtn.addEventListener("mouseover",moveNo);
+noBtn.addEventListener("click",moveNo);
+
+/* YES */
+const yesBtn=document.getElementById("yesBtn");
+yesBtn.addEventListener("click",function(){
+document.getElementById("ring").style.display="block";
+for(let i=0;i<100;i++){
+let heart=document.createElement("div");
+heart.innerHTML="❤️";
+heart.className="heart";
+heart.style.left=Math.random()*window.innerWidth+"px";
+heart.style.top=window.innerHeight+"px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),2000);
+}
+document.getElementById("popup").classList.add("active");
+startFireworks();
+});
+
+/* Popup */
+function closePopup(){
+document.getElementById("popup").classList.remove("active");
+}
+
+/* Countdown (change date) */
+let targetDate=new Date("2026-10-16").getTime();
+setInterval(()=>{
+let now=new Date().getTime();
+let diff=targetDate-now;
+let d=Math.floor(diff/(1000*60*60*24));
+document.getElementById("countdown").innerHTML="Countdown to Our Special Day: "+d+" days ❤️";
+},1000);
+
+/* Fireworks */
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+let particles=[];
+function startFireworks(){
+for(let i=0;i<100;i++){
+particles.push({
+x:canvas.width/2,
+y:canvas.height/2,
+angle:Math.random()*2*Math.PI,
+speed:Math.random()*5+2,
+life:100
+});
+}
+}
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach((p,index)=>{
+p.x+=Math.cos(p.angle)*p.speed;
+p.y+=Math.sin(p.angle)*p.speed;
+p.life--;
+ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
+ctx.fillRect(p.x,p.y,4,4);
+if(p.life<=0)particles.splice(index,1);
+});
+requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>
